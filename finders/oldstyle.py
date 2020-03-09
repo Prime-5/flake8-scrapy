@@ -1,6 +1,23 @@
 import ast
-
 from finders import IssueFinder
+
+
+class RobotsIssueFinder(IssueFinder):
+
+    msg_code = 'SET01'
+    msg_info = 'ROBOTSTXT_OBEY should be boolean True or False'
+
+    def find_issues(self, node):
+        if self.issue_applies(node):
+            if isinstance(node.value, ast.Num):
+                if(node.targets[0].id == "ROBOTSTXT_OBEY"):   
+                    print (node.lineno, node.col_offset, self.message)
+                    
+
+    def issue_applies(self, node):
+        if(node.targets[0].id == "ROBOTSTXT_OBEY"):
+            return True
+            
 
 
 class UrlJoinIssueFinder(IssueFinder):

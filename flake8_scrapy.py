@@ -3,7 +3,7 @@ import ast
 from finders.domains import (
     UnreachableDomainIssueFinder, UrlInAllowedDomainsIssueFinder,
 )
-from finders.oldstyle import OldSelectorIssueFinder, UrlJoinIssueFinder
+from finders.oldstyle import OldSelectorIssueFinder, UrlJoinIssueFinder, RobotsIssueFinder
 
 
 __version__ = '0.0.1'
@@ -19,6 +19,7 @@ class ScrapyStyleIssueFinder(ast.NodeVisitor):
                 UnreachableDomainIssueFinder(),
                 UrlInAllowedDomainsIssueFinder(),
                 OldSelectorIssueFinder(),
+                RobotsIssueFinder(),
             ],
             'Call': [
                 UrlJoinIssueFinder(),
