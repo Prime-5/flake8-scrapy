@@ -2,21 +2,23 @@ import ast
 from finders import IssueFinder
 
 
-class RobotsIssueFinder(IssueFinder):
+class BoolIssueFinder(IssueFinder):
 
     msg_code = 'SET01'
-    msg_info = 'ROBOTSTXT_OBEY should be boolean True or False'
-
-    def find_issues(self, node):
+    msg_info = 'Should be boolean value'
+        
+    def find_issues(self, node):      
         if self.issue_applies(node):
-            if isinstance(node.value, ast.Num):
-                if(node.targets[0].id == "ROBOTSTXT_OBEY"):   
-                    print (node.lineno, node.col_offset, self.message)
+            if not isinstance(node.value, ast.NameConstant):   
+                print (node.lineno, node.col_offset, self.message)
                     
 
     def issue_applies(self, node):
-        if(node.targets[0].id == "ROBOTSTXT_OBEY"):
-            return True
+        items = ['ROBOTSTXT_OBEY', 'COOKIES_ENABLED', 'TELNETCONSOLE_ENABLED', 'AUTOTHROTTLE_ENABLED', 'AUTOTHROTTLE_DEBUG', 'HTTPCACHE_ENABLED']
+        obj = node.targets[0].id
+        for item in items:
+            if(obj == item):
+                return True
             
 
 
