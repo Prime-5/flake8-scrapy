@@ -3,7 +3,7 @@ import ast
 from finders.domains import (
     UnreachableDomainIssueFinder, UrlInAllowedDomainsIssueFinder,
 )
-from finders.oldstyle import OldSelectorIssueFinder, UrlJoinIssueFinder, BoolIssueFinder
+from finders.oldstyle import OldSelectorIssueFinder, UrlJoinIssueFinder, BoolIssueFinder, IntIssueFinder, StringIssueFinder, ListIssueFinder, DictIssueFinder
 
 
 __version__ = '0.0.1'
@@ -20,6 +20,10 @@ class ScrapyStyleIssueFinder(ast.NodeVisitor):
                 UrlInAllowedDomainsIssueFinder(),
                 OldSelectorIssueFinder(),
                 BoolIssueFinder(),
+                IntIssueFinder(),
+                StringIssueFinder(),
+                ListIssueFinder(),
+                DictIssueFinder(),
             ],
             'Call': [
                 UrlJoinIssueFinder(),

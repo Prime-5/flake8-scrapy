@@ -4,13 +4,13 @@ from finders import IssueFinder
 
 class BoolIssueFinder(IssueFinder):
 
-    msg_code = 'SET01'
-    msg_info = 'Should be boolean value'
-        
+    msg_code = ' SET01'
+    msg_info = 'Should be a boolean value'
+
     def find_issues(self, node):      
         if self.issue_applies(node):
             if not isinstance(node.value, ast.NameConstant):   
-                print (node.lineno, node.col_offset, self.message)
+                print (node.lineno, node.col_offset, node.targets[0].id + self.message)
                     
 
     def issue_applies(self, node):
@@ -19,7 +19,83 @@ class BoolIssueFinder(IssueFinder):
         for item in items:
             if(obj == item):
                 return True
-            
+
+
+
+class IntIssueFinder(IssueFinder):
+
+    msg_code = ' SET02'
+    msg_info = 'Should be an integer'
+        
+    def find_issues(self, node):      
+        if self.issue_applies(node):
+            if not isinstance(node.value, ast.Num):   
+                print (node.lineno, node.col_offset, node.targets[0].id + self.message)
+                    
+
+    def issue_applies(self, node):
+        items = ['CONCURRENT_REQUESTS', 'DOWNLOAD_DELAY', 'CONCURRENT_REQUESTS_PER_DOMAIN', 'CONCURRENT_REQUESTS_PER_IP', 'AUTOTHROTTLE_START_DELAY', 'AUTOTHROTTLE_MAX_DELAY', 'AUTOTHROTTLE_TARGET_CONCURRENCY', 'HTTPCACHE_EXPIRATION_SECS']
+        obj = node.targets[0].id
+        for item in items:
+            if(obj == item):
+                return True            
+
+
+class StringIssueFinder(IssueFinder):
+
+    msg_code = ' SET03'
+    msg_info = 'Should be a string'
+
+    def find_issues(self, node):      
+        if self.issue_applies(node):
+            if not isinstance(node.value, ast.Str):   
+                print (node.lineno, node.col_offset, node.targets[0].id + self.message)
+                    
+
+    def issue_applies(self, node):
+        items = ['BOT_NAME', 'NEWSPIDER_MODULE', 'USER_AGENT', 'HTTPCACHE_DIR', 'HTTPCACHE_STORAGE']
+        obj = node.targets[0].id
+        for item in items:
+            if(obj == item):
+                return True
+
+
+class ListIssueFinder(IssueFinder):
+
+    msg_code = ' SET04'
+    msg_info = 'Should be a list'
+
+    def find_issues(self, node):      
+        if self.issue_applies(node):
+            if not isinstance(node.value, ast.List):   
+                print (node.lineno, node.col_offset, node.targets[0].id + self.message)
+                    
+
+    def issue_applies(self, node):
+        items = ['SPIDER_MODULES', 'HTTPCACHE_IGNORE_HTTP_CODES']
+        obj = node.targets[0].id
+        for item in items:
+            if(obj == item):
+                return True
+
+
+class DictIssueFinder(IssueFinder):
+
+    msg_code = ' SET05'
+    msg_info = 'Should be a dictionary'
+
+    def find_issues(self, node):      
+        if self.issue_applies(node):
+            if not isinstance(node.value, ast.Dict):   
+                print (node.lineno, node.col_offset, node.targets[0].id + self.message)
+                    
+
+    def issue_applies(self, node):
+        items = ['DEFAULT_REQUEST_HEADERS', 'SPIDER_MIDDLEWARES', 'DOWNLOADER_MIDDLEWARES', 'EXTENSIONS', 'ITEM_PIPELINES']
+        obj = node.targets[0].id
+        for item in items:
+            if(obj == item):
+                return True
 
 
 class UrlJoinIssueFinder(IssueFinder):
